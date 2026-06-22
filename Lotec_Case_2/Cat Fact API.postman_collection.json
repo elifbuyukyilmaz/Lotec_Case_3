@@ -1,0 +1,291 @@
+{
+  "info": {
+    "_postman_id": "668930e8-7411-4d7d-a3da-74dceb3d3221",
+    "name": "Cat Fact API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55900681",
+    "_collection_link": "https://go.postman.co/collection/55900681-668930e8-7411-4d7d-a3da-74dceb3d3221?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Facts",
+      "item": [
+        {
+          "name": "/fact",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has fact and length fields\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData).to.have.property(\"fact\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"length\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Fact should be within the max_length=100 limit\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "\r",
+                  "        pm.expect(json.fact.length).to.be.at.most(70);\r",
+                  "}); \r",
+                  "\r",
+                  "pm.test(\"Fact is string\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.fact).to.be.a(\"string\");\r",
+                  "   \r",
+                  "});\r",
+                  "pm.test(\"Length is number \", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.length).to.be.a(\"number\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/fact?max_length=70",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fact"
+              ],
+              "query": [
+                {
+                  "key": "max_length",
+                  "value": "70",
+                  "description": "maximum length of returned fact"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/facts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has data field\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+                  "\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data list should not be empty\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.data.length).to.be.greaterThan(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every fact field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.fact).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every length field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.length).to.exist.and.to.be.a('number');\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"All facts should be within the max_length=100 limit\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.fact.length).to.be.at.most(100);\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/facts?max_length=100&limit=100&page=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "facts"
+              ],
+              "query": [
+                {
+                  "key": "max_length",
+                  "value": "100",
+                  "description": "maximum length of returned fact"
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "description": "limit the amount of results returned"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Breeds",
+      "item": [
+        {
+          "name": "/breeds",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response has data field\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Data list should not be empty\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(jsonData.data.length).to.be.greaterThan(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Each breed item has required fields\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "    jsonData.data.forEach(function (item) {\r",
+                  "        pm.expect(item).to.have.property(\"breed\");\r",
+                  "        pm.expect(item).to.have.property(\"country\");\r",
+                  "        pm.expect(item).to.have.property(\"origin\");\r",
+                  "        pm.expect(item).to.have.property(\"coat\");\r",
+                  "        pm.expect(item).to.have.property(\"pattern\");\r",
+                  "\r",
+                  "\r",
+                  "        pm.expect(item.breed).to.be.a(\"string\");\r",
+                  "        pm.expect(item.country).to.be.a(\"string\");\r",
+                  "        pm.expect(item.origin).to.be.a(\"string\");\r",
+                  "        pm.expect(item.coat).to.be.a(\"string\");\r",
+                  "        pm.expect(item.pattern).to.be.a(\"string\");\r",
+                  "\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every breed field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.breed).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every country field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.country).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every origin field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.origin).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every coat field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.coat).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Every pattern field should not be empty\", () => {\r",
+                  "    const json = pm.response.json();\r",
+                  "    json.data.forEach(item => {\r",
+                  "        pm.expect(item.pattern).to.be.a('string').and.not.empty;\r",
+                  "    });\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/breeds?limit=100&page=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "breeds"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "description": "limit the amount of results returned"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
