@@ -1,4 +1,7 @@
-# Lotec_Case_3
+# Lotec_Case_Study
+Lotec_Case_1, Lotec_Case_2, Lotec_Case_3
+
+## Lotec_Case_3
 
 https://the-internet.herokuapp.com sitesi üzerinde *Selenium WebDriver* ve *JUnit 5* kullanılarak yazılmış UI test otomasyon projesidir.
 
